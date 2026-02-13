@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>14 февраля | Для тебя</title>
+  <!-- Fonts & Icons (чистые, современные) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #2b2a2a;  /* глубокий графит */
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* главный контейнер — элегантная карточка */
+    .frame {
+      max-width: 1200px;
+      width: 100%;
+      background: #e9e1da;  /* тёплый светлый беж (шампань) */
+      border-radius: 60px 60px 40px 40px;
+      padding: 40px 30px;
+      box-shadow: 
+        0 30px 50px -15px #1a1418,
+        0 0 0 3px #c0a69b,
+        0 0 0 8px #9f7e75;
+      border: 2px solid #b59589;
+    }
+
+    /* заголовок — приглушённый, благородный */
+    .main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      color: #4e3e3a;       /* тёмный серо-бежевый */
+      text-align: center;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+      text-shadow: 3px 3px 0 #d0bcb2, 6px 6px 0 rgba(128, 94, 94, 0.15);
+    }
+
+    /* навигация 5 кнопок — спокойные тона */
+    .nav-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .nav-tab {
+      background: #cbb7ae;   /* приглушённая пыльная роза */
+      border: none;
+      padding: 14px 22px;
+      border-radius: 50px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #2f2623;
+      cursor: pointer;
+      transition: 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 0 #8d6f67;
+      border: 2px solid #f0e1d8;
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+
+    .nav-tab i {
+      font-size: 1.4rem;
+      color: #58423d;
+    }
+
+    .nav-tab:hover {
+      background: #dac2b8;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 0 #8d6f67, 0 8px 15px #ab948b;
+    }
+
+    .nav-tab.active {
+      background: #b29388;   /* более насыщенная пыльная роза */
+      color: white;
+      box-shadow: 0 3px 0 #5f4640;
+      transform: translateY(3px);
+      border-color: #e9d9d0;
+    }
+
+    .nav-tab.active i {
+      color: #ffefe7;
+    }
+
+    /* страницы */
+    .pages-wrap {
+      min-height: 450px;
+      background: rgba(255, 245, 240, 0.4);
+      backdrop-filter: blur(2px);
+      border-radius: 50px;
+      padding: 30px 20px;
+      border: 2px solid #ddc5bb;
+    }
+
+    .slide {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .slide.active-slide {
+      display: block;
+      opacity: 1;
+      animation: slideFade 0.6s ease;
+    }
+
+    @keyframes slideFade {
+      0% { opacity: 0.2; transform: translateX(8px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    /* типографика страниц */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #4f3c38;
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: 600;
+      border-bottom: 2px solid #d4b6ab;
+      padding-bottom: 12px;
+    }
+
+    /* фото-карточки (минимализм) */
+    .photo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 35px 0;
+    }
+
+    .photo-item {
+      background: #ddcdc2;
+      padding: 12px 12px 20px;
+      border-radius: 25px;
+      border: 3px solid #b29488;
+      box-shadow: 0 15px 25px -8px #5d4a44;
+      width: 200px;
+      transition: 0.2s;
+    }
+
+    .photo-item:hover {
+      transform: scale(1.02) rotate(-0.5deg);
+      background: #e7d7cc;
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 3px solid #9f7b70;
+    }
+
+    .photo-item p {
+      text-align: center;
+      margin-top: 12px;
+      font-weight: 600;
+      color: #3c2d2a;
+      font-size: 1.2rem;
+    }
+
+    /* кнопки действий (нейтральные) */
+    .action-btn {
+      background: #b5978d;
+      border: none;
+      color: #261d1b;
+      font-weight: 600;
+      font-size: 1.3rem;
+      padding: 15px 35px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 2px solid #ecd9cf;
+      box-shadow: 0 6px 0 #6f534b;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .action-btn i {
+      font-size: 1.6rem;
+      color: #41302b;
+    }
+
+    .action-btn:hover {
+      background: #c9aca1;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 0 #6f534b, 0 10px 20px #a8867b;
+    }
+
+    /* анимированный бокс */
+    .move-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .elegant-box {
+      width: 120px;
+      height: 120px;
+      background: #b99e94;
+      border-radius: 30px 10px 30px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: #f7eee9;
+      box-shadow: 0 15px 25px #5f4942, 0 0 0 4px #ebd9d0;
+      transition: 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin: 25px auto;
+      border: 3px solid #b28073;
+    }
+
+    .elegant-box.moved {
+      transform: translateX(180px) rotate(360deg) scale(1.2);
+      background: #cbb2a7;
+      box-shadow: 0 0 40px #ddbeb1;
+    }
+
+    /* скрытые сообщения */
+    .secret-message {
+      display: none;
+      background: #d8c4bb;
+      padding: 25px;
+      border-radius: 60px 15px 60px 15px;
+      font-size: 1.5rem;
+      color: #2f2220;
+      border: 6px double #936f65;
+      margin: 30px 0;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .secret-message.show {
+      display: block;
+      animation: reveal 0.7s;
+    }
+
+    @keyframes reveal {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* купоны в стиле ретро */
+    .coupon-set {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .voucher {
+      background: #ddcec3;
+      width: 200px;
+      padding: 20px 10px;
+      border-radius: 30px 5px 30px 5px;
+      border: 5px double #9d7d72;
+      outline: 4px solid #ebdbd0;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .voucher:hover {
+      background: #e9d9ce;
+      transform: scale(1.05);
+      border-color: #b1877b;
+      box-shadow: 0 0 30px #d3b1a4;
+    }
+
+    .voucher i {
+      font-size: 3rem;
+      color: #7b5d55;
+    }
+
+    .voucher h3 {
+      font-size: 2.2rem;
+      color: #4f3630;
+      margin: 5px 0;
+    }
+
+    .voucher p {
+      background: #a8877c;
+      color: white;
+      padding: 8px;
+      border-radius: 30px;
+      font-weight: 600;
+    }
+
+    /* письмо (очень нежное, но не розовое) */
+    .letter-block {
+      background: #ebdfd7;
+      padding: 45px 40px;
+      border-radius: 100px 20px 100px 20px;
+      border: 12px double #b99b90;
+      box-shadow: inset 0 0 30px #ddc9c0;
+      max-width: 700px;
+      margin: 20px auto;
+    }
+
+    .letter-block p {
+      font-size: 1.5rem;
+      line-height: 2.2rem;
+      color: #3e2d28;
+      font-weight: 400;
+      margin: 25px 0;
+    }
+
+    .signature {
+      font-size: 2rem;
+      font-family: 'Playfair Display', serif;
+      color: #775b53;
+      text-align: right;
+    }
+
+    /* футер */
+    .footer-note {
+      text-align: center;
+      margin-top: 35px;
+      color: #77605a;
+      font-weight: 500;
+      font-size: 1.2rem;
+    }
+
+    /* адаптация */
+    @media (max-width: 700px) {
+      .main-title { font-size: 2.8rem; }
+      .nav-tab { padding: 10px 14px; font-size: 1rem; }
+      .elegant-box.moved { transform: translateX(80px) rotate(360deg) scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <h1 class="main-title">14 февраля · для тебя</h1>
+
+    <!-- 5 кнопок-навигации -->
+    <div class="nav-grid">
+      <div class="nav-tab active" data-slide="1"><i class="fas fa-heart"></i> Ты и я</div>
+      <div class="nav-tab" data-slide="2"><i class="fas fa-camera-retro"></i> Моменты</div>
+      <div class="nav-tab" data-slide="3"><i class="fas fa-ticket-alt"></i> Купоны</div>
+      <div class="nav-tab" data-slide="4"><i class="fas fa-gift"></i> Сюрприз</div>
+      <div class="nav-tab" data-slide="5"><i class="fas fa-envelope-open"></i> Письмо</div>
+    </div>
+
+    <!-- 5 слайдов -->
+    <div class="pages-wrap">
+      <!-- СЛАЙД 1 - Ты и я + анимация движения -->
+      <div id="slide1" class="slide active-slide">
+        <h2>💫 YOU AND ME</h2>
+        <div class="photo-row">
+          <div class="photo-item"><img src="1.jpg" alt="couple"><p>❤️ I </p></div>
+          <div class="photo-item"><img src="2.jpg" alt="romantic"><p>☕ TOGETHER</p></div>
+          <div class="photo-item"><img src="3.jpg" alt="us"><p>✨ YOU </p></div>
+        </div>
+        <div class="move-area">
+          <div id="movingElement" class="elegant-box"><i class="fas fa-heart"></i></div>
+          <button class="action-btn" id="moveBtn"><i class="fas fa-arrows-alt"></i> Movement</button>
+        </div>
+      </div>
+
+      <!-- СЛАЙД 2 - Моменты + открытие секрета -->
+      <div id="slide2" class="slide">
+        <h2>📸 My lovely puppy </h2>
+        <div class="photo-row">
+          <div class="photo-item"><img src="7.jpg" alt="moment1"><p>🔥 hot guy </p></div>
+          <div class="photo-item"><img src="4.jpg" alt="moment2"><p>🎬 When I'm looking at you</p></div>
+          <div class="photo-item"><img src="6.jpg" alt="moment3"><p>🌙 cute puppy </p></div>
+        </div>
+        <div style="text-align: center;">
+          <button class="action-btn" id="revealSecret"><i class="fas fa-lock"></i> open memories</button>
+          <div id="secretBlock" class="secret-message">
+            <i class="fas fa-heart" style="color:#77554a;"></i>  When you sent me cute videos with a smile, you looked like a puppy ---- and I fell in love even more
+          </div>
+        </div>
+      </div>
+
+      <!-- СЛАЙД 3 - Купоны (активируются) -->
+      <div id="slide3" class="slide">
+        <h2>🎟️ COUPONS FOR YOU</h2>
+        <div class="coupon-set">
+          <div class="voucher" onclick="useVoucher(this)"><i class="fas fa-coffee"></i><h3>01</h3><p>A KISS </p></div>
+          <div class="voucher" onclick="useVoucher(this)"><i class="fas fa-dice"></i><h3>02</h3><p><H2>A HUG</H2></p></div>
+          <div class="voucher" onclick="useVoucher(this)"><i class="fas fa-spa"></i><h3>03</h3><p>MY LOVE</p></div>
+          <div class="voucher" onclick="useVoucher(this)"><i class="fas fa-utensils"></i><h3>04</h3><p>YOU'RE MINE</p></div>
+        </div>
+        <p style="text-align:center; color:#5d4942;">нажми на купон — активируется</p>
+      </div>
+
+      <!-- СЛАЙД 4 - Сюрприз (движение подарка + открытие) -->
+      <div id="slide4" class="slide">
+        <h2>🎁 SURPRISE</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:30px; align-items:center; justify-content:center;">
+          <div class="photo-item" style="width:180px;"><img src="5.jpg" alt="gift"><p>✨ for you </p></div>
+          <div style="text-align:center;">
+            <div id="giftBox" class="elegant-box" style="background:#bb9d92;"><i class="fas fa-gift"></i></div>
+            <button class="action-btn" id="moveGiftBtn"><i class="fas fa-arrow-right"></i> move</button>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:30px;">
+          <button class="action-btn" id="revealGift"><i class="fas fa-box-open"></i>open</button>
+          <div id="giftMessage" class="secret-message">
+            🌟 "My moon, you are so dear to me that I don't want to share you with anyone, I want you to be only mine." --- That day I became happier
+          </div>
+        </div>
+      </div>
+
+      <!-- СЛАЙД 5 - Письмо (элегантное, без розового) -->
+      <div id="slide5" class="slide">
+        <h2>💌 LETTER</h2>
+        <div class="letter-block">
+          <p>«My dear,
+Today is February 14th, and I am sitting and thinking about us. About the way you smile when I come. About the way you hug me, kiss me. About the way you look at me - as if I am the most precious thing you have.
+You know, you are my warmth. My place of power. The person next to whom I can be myself: funny, tired, capricious, happy - whatever. You accept me completely, and for that I adore you.
+Thank you for your arms that hug me. For your voice that calms me. For the fact that you are. Just being - and my life has become a hundred times brighter.
+I am so glad that you are my boyfriend, my man, my person. I promise to please you, take care of you and love you so much that you always feel it - even from a distance.
+Happy Valentine's Day, darling. You are the best thing that has ever happened to me.
+I kiss you mentally,»</p>
+          <div class="signature">💕your girl</div>
+        </div>
+        <div style="display:flex; justify-content:center; gap:25px; margin:30px 0;">
+          <i class="fas fa-heart" style="color:#a68478; font-size:2.5rem;"></i>
+          <i class="fas fa-heart" style="color:#a68478; font-size:2.5rem;"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <i class="fas fa-infinity"></i> 14 FEBRUARY 2026 <i class="fas fa-infinity"></i>
+    </div>
+  </div>
+
+  <script>
+    // === ПЕРЕКЛЮЧЕНИЕ 5 СЛАЙДОВ ===
+    const tabs = document.querySelectorAll('.nav-tab');
+    const slides = document.querySelectorAll('.slide');
+
+    function setActiveSlide(index) {
+      slides.forEach(s => s.classList.remove('active-slide'));
+      tabs.forEach(t => t.classList.remove('active'));
+
+      const targetSlide = document.getElementById('slide' + index);
+      if (targetSlide) targetSlide.classList.add('active-slide');
+
+      const activeTab = Array.from(tabs).find(tab => tab.dataset.slide == index);
+      if (activeTab) activeTab.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const slideIndex = tab.dataset.slide;
+        setActiveSlide(slideIndex);
+      });
+    });
+
+    // === СЛАЙД 1: движение ===
+    const movingEl = document.getElementById('movingElement');
+    const moveBtn = document.getElementById('moveBtn');
+    if (moveBtn) {
+      moveBtn.addEventListener('click', () => {
+        movingEl.classList.toggle('moved');
+      });
+    }
+
+    // === СЛАЙД 2: открыть секрет ===
+    const revealBtn = document.getElementById('revealSecret');
+    const secretBlock = document.getElementById('secretBlock');
+    if (revealBtn) {
+      revealBtn.addEventListener('click', () => {
+        secretBlock.classList.toggle('show');
+        revealBtn.innerHTML = secretBlock.classList.contains('show') 
+          ? '<i class="fas fa-heart-broken"></i> скрыть' 
+          : '<i class="fas fa-lock"></i> открыть воспоминание';
+      });
+    }
+
+    // === СЛАЙД 3: купоны ===
+    window.useVoucher = function(el) {
+      if (el.style.opacity === '0.6') return;
+      el.style.opacity = '0.6';
+      el.style.background = '#cfbdb2';
+      const used = document.createElement('div');
+      used.innerText = '✓';
+      used.style.fontSize = '3rem';
+      used.style.color = '#3b2c28';
+      el.appendChild(used);
+      el.style.pointerEvents = 'none';
+    }
+
+    // === СЛАЙД 4: движение подарка + открытие ===
+    const giftBox = document.getElementById('giftBox');
+    const moveGift = document.getElementById('moveGiftBtn');
+    if (moveGift && giftBox) {
+      moveGift.addEventListener('click', () => {
+        giftBox.classList.toggle('moved');
+      });
+    }
+
+    const revealGiftBtn = document.getElementById('revealGift');
+    const giftMsg = document.getElementById('giftMessage');
+    if (revealGiftBtn) {
+      revealGiftBtn.addEventListener('click', () => {
+        giftMsg.classList.toggle('show');
+        revealGiftBtn.innerHTML = giftMsg.classList.contains('show') 
+          ? '<i class="fas fa-gift"></i> закрыть' 
+          : '<i class="fas fa-box-open"></i> открыть';
+      });
+    }
+  </script>
+</body>
+</html>
